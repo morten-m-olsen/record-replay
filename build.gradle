@@ -1,0 +1,26 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'findbugs'
+
+project.ext.jsr305 = "3.0.0"
+project.ext.spring = "4.3.5.RELEASE"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework:spring-test:$spring"
+    compile "org.springframework:spring-context:$spring"
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
+    compile 'junit:junit:4.12'
+    compile 'org.mockito:mockito-all:1.9.5'
+    compile "com.google.code.findbugs:jsr305:$jsr305"
+    compile "com.google.code.findbugs:annotations:$jsr305"
+    compile 'org.projectlombok:lombok:1.14.8'
+    testCompile "org.springframework:spring-webmvc:$spring"
+    testCompile "javax.servlet:javax.servlet-api:3.1.0"
+}
