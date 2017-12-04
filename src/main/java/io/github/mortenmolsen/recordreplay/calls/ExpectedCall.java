@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ExpectedCall<T> {
 
     /**
-     * Defines which method is expected to be called on the interface that is designated as the point where external communication with the broker begins.
+     * Defines which method is expected to be called on the interface/class from which recording/replaying is done
      */
     public final String methodName;
 

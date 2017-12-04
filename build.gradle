@@ -2,11 +2,80 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'findbugs'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 project.ext.jsr305 = "3.0.0"
 project.ext.spring = "4.3.5.RELEASE"
 
+group = "io.github.morten-m-olsen"
+archivesBaseName = "record-replay"
+version = "0.3.0"
+
 sourceCompatibility = 1.8
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Record-Replay Test Framework'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'A testing framework enabling recording and replaying of data.'
+                url 'https://morten-m-olsen.github.io/record-replay/'
+
+                scm {
+                    connection 'https://github.com/morten-m-olsen/record-replay.git'
+                    developerConnection 'https://github.com/morten-m-olsen/record-replay.git'
+                    url 'https://github.com/morten-m-olsen/record-replay'
+                }
+
+                licenses {
+                    license {
+                        name 'The GNU GENERAL PUBLIC LICENSE, Version 3.0'
+                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'mmo'
+                        name 'Morten Meiling Olsen'
+                        email 'morten.m.olsen@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()

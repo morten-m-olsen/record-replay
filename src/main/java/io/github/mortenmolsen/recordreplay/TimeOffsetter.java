@@ -20,11 +20,8 @@ public class TimeOffsetter {
     private long extraOffset = 0;
 
     public void init(TestCallManager<?> testCallManager) {
-        Long callResult = testCallManager.simpleCall(() -> System.currentTimeMillis(), Long.TYPE, CALL_IDENTIFIER);
-        //TODO(mmo): fix the below - rerecord...
-        // NOTE: since I did not want to re-record everything, a value of -1 was hacked into the existing test data - this makes the offsetter not really do anything.
-        // If time offsetting is ever really needed in, for instance, the broker tests - they need to be re-recorded
-        baseOffset = callResult != -1 ? Math.abs(callResult - System.currentTimeMillis()) : 0;
+        Long callResult = testCallManager.simpleCall(System::currentTimeMillis, Long.TYPE, CALL_IDENTIFIER);
+        baseOffset = Math.abs(callResult - System.currentTimeMillis());
     }
 
     /**
