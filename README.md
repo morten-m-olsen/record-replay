@@ -17,3 +17,7 @@ call. This makes it possible to record quite complex exchanges.
 The code includes a very simple example of how to set up the framework (the PoCTest class).
 
 This readme is under construction and I will write a more thorough guide on how to use the framework.
+
+## License
+
+This software is released under the [GNU GPL V3](https://www.gnu.org/licenses/gpl-3.0.en.html) license.
